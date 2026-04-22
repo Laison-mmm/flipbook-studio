@@ -1,0 +1,608 @@
+[
+  {
+    "id": "kr-busan-haeundae",
+    "country": "韓國",
+    "city": "釜山",
+    "name": "海雲台日落",
+    "frames": [
+      "assets/scenes/kr-busan-haeundae/frame-01.jpg",
+      "assets/scenes/kr-busan-haeundae/frame-02.jpg",
+      "assets/scenes/kr-busan-haeundae/frame-03.jpg",
+      "assets/scenes/kr-busan-haeundae/frame-04.jpg",
+      "assets/scenes/kr-busan-haeundae/frame-05.jpg",
+      "assets/scenes/kr-busan-haeundae/frame-06.jpg",
+      "assets/scenes/kr-busan-haeundae/frame-07.jpg",
+      "assets/scenes/kr-busan-haeundae/frame-08.jpg",
+      "assets/scenes/kr-busan-haeundae/frame-09.jpg",
+      "assets/scenes/kr-busan-haeundae/frame-10.jpg"
+    ],
+    "frameCount": 10
+  },
+  {
+    "id": "kr-busan-gamcheon",
+    "country": "韓國",
+    "city": "釜山",
+    "name": "甘川洞彩村",
+    "frames": [
+      "assets/scenes/kr-busan-gamcheon/frame-01.jpg",
+      "assets/scenes/kr-busan-gamcheon/frame-02.jpg",
+      "assets/scenes/kr-busan-gamcheon/frame-03.jpg",
+      "assets/scenes/kr-busan-gamcheon/frame-04.jpg",
+      "assets/scenes/kr-busan-gamcheon/frame-05.jpg",
+      "assets/scenes/kr-busan-gamcheon/frame-06.jpg"
+    ],
+    "frameCount": 6
+  },
+  {
+    "id": "kr-busan-gwangalli",
+    "country": "韓國",
+    "city": "釜山",
+    "name": "廣安里橋夜景",
+    "frames": [
+      "assets/scenes/kr-busan-gwangalli/frame-01.jpg",
+      "assets/scenes/kr-busan-gwangalli/frame-02.jpg",
+      "assets/scenes/kr-busan-gwangalli/frame-03.jpg",
+      "assets/scenes/kr-busan-gwangalli/frame-04.jpg",
+      "assets/scenes/kr-busan-gwangalli/frame-05.jpg",
+      "assets/scenes/kr-busan-gwangalli/frame-06.jpg",
+      "assets/scenes/kr-busan-gwangalli/frame-07.jpg",
+      "assets/scenes/kr-busan-gwangalli/frame-08.jpg",
+      "assets/scenes/kr-busan-gwangalli/frame-09.jpg",
+      "assets/scenes/kr-busan-gwangalli/frame-10.jpg"
+    ],
+    "frameCount": 10
+  },
+  {
+    "id": "kr-busan-capsule",
+    "country": "韓國",
+    "city": "釜山",
+    "name": "天空膠囊列車海景",
+    "frames": [
+      "assets/scenes/kr-busan-capsule/frame-01.jpg",
+      "assets/scenes/kr-busan-capsule/frame-02.jpg",
+      "assets/scenes/kr-busan-capsule/frame-03.jpg",
+      "assets/scenes/kr-busan-capsule/frame-04.jpg",
+      "assets/scenes/kr-busan-capsule/frame-05.jpg",
+      "assets/scenes/kr-busan-capsule/frame-06.jpg"
+    ],
+    "frameCount": 6
+  },
+  {
+    "id": "kr-busan-jagalchi",
+    "country": "韓國",
+    "city": "釜山",
+    "name": "札嘎其港口夕陽",
+    "frames": [
+      "assets/scenes/kr-busan-jagalchi/frame-01.jpg",
+      "assets/scenes/kr-busan-jagalchi/frame-02.jpg",
+      "assets/scenes/kr-busan-jagalchi/frame-03.jpg",
+      "assets/scenes/kr-busan-jagalchi/frame-04.jpg",
+      "assets/scenes/kr-busan-jagalchi/frame-05.jpg",
+      "assets/scenes/kr-busan-jagalchi/frame-06.jpg",
+      "assets/scenes/kr-busan-jagalchi/frame-07.jpg",
+      "assets/scenes/kr-busan-jagalchi/frame-08.jpg"
+    ],
+    "frameCount": 8
+  },
+  {
+    "id": "kr-seoul-namsan",
+    "country": "韓國",
+    "city": "首爾",
+    "name": "南山塔夜景",
+    "frames": [
+      "assets/scenes/kr-seoul-namsan/frame-01.jpg",
+      "assets/scenes/kr-seoul-namsan/frame-02.jpg",
+      "assets/scenes/kr-seoul-namsan/frame-03.jpg",
+      "assets/scenes/kr-seoul-namsan/frame-04.jpg",
+      "assets/scenes/kr-seoul-namsan/frame-05.jpg",
+      "assets/scenes/kr-seoul-namsan/frame-06.jpg",
+      "assets/scenes/kr-seoul-namsan/frame-07.jpg",
+      "assets/scenes/kr-seoul-namsan/frame-08.jpg",
+      "assets/scenes/kr-seoul-namsan/frame-09.jpg",
+      "assets/scenes/kr-seoul-namsan/frame-10.jpg"
+    ],
+    "frameCount": 10
+  },
+  {
+    "id": "kr-seoul-bukchon",
+    "country": "韓國",
+    "city": "首爾",
+    "name": "北村韓屋村",
+    "frames": [
+      "assets/scenes/kr-seoul-bukchon/frame-01.jpg",
+      "assets/scenes/kr-seoul-bukchon/frame-02.jpg",
+      "assets/scenes/kr-seoul-bukchon/frame-03.jpg",
+      "assets/scenes/kr-seoul-bukchon/frame-04.jpg",
+      "assets/scenes/kr-seoul-bukchon/frame-05.jpg",
+      "assets/scenes/kr-seoul-bukchon/frame-06.jpg",
+      "assets/scenes/kr-seoul-bukchon/frame-07.jpg",
+      "assets/scenes/kr-seoul-bukchon/frame-08.jpg",
+      "assets/scenes/kr-seoul-bukchon/frame-09.jpg",
+      "assets/scenes/kr-seoul-bukchon/frame-10.jpg"
+    ],
+    "frameCount": 10
+  },
+  {
+    "id": "kr-seoul-han",
+    "country": "韓國",
+    "city": "首爾",
+    "name": "漢江夜景",
+    "frames": [
+      "assets/scenes/kr-seoul-han/frame-01.jpg",
+      "assets/scenes/kr-seoul-han/frame-02.jpg",
+      "assets/scenes/kr-seoul-han/frame-03.jpg",
+      "assets/scenes/kr-seoul-han/frame-04.jpg",
+      "assets/scenes/kr-seoul-han/frame-05.jpg",
+      "assets/scenes/kr-seoul-han/frame-06.jpg",
+      "assets/scenes/kr-seoul-han/frame-07.jpg",
+      "assets/scenes/kr-seoul-han/frame-08.jpg",
+      "assets/scenes/kr-seoul-han/frame-09.jpg",
+      "assets/scenes/kr-seoul-han/frame-10.jpg"
+    ],
+    "frameCount": 10
+  },
+  {
+    "id": "kr-seoul-hongdae",
+    "country": "韓國",
+    "city": "首爾",
+    "name": "弘大霓虹街",
+    "frames": [
+      "assets/scenes/kr-seoul-hongdae/frame-01.jpg",
+      "assets/scenes/kr-seoul-hongdae/frame-02.jpg",
+      "assets/scenes/kr-seoul-hongdae/frame-03.jpg",
+      "assets/scenes/kr-seoul-hongdae/frame-04.jpg",
+      "assets/scenes/kr-seoul-hongdae/frame-05.jpg",
+      "assets/scenes/kr-seoul-hongdae/frame-06.jpg",
+      "assets/scenes/kr-seoul-hongdae/frame-07.jpg",
+      "assets/scenes/kr-seoul-hongdae/frame-08.jpg",
+      "assets/scenes/kr-seoul-hongdae/frame-09.jpg",
+      "assets/scenes/kr-seoul-hongdae/frame-10.jpg"
+    ],
+    "frameCount": 10
+  },
+  {
+    "id": "jp-kyoto-arashiyama",
+    "country": "日本",
+    "city": "京都",
+    "name": "嵐山竹林",
+    "frames": [
+      "assets/scenes/jp-kyoto-arashiyama/frame-01.jpg",
+      "assets/scenes/jp-kyoto-arashiyama/frame-02.jpg",
+      "assets/scenes/jp-kyoto-arashiyama/frame-03.jpg",
+      "assets/scenes/jp-kyoto-arashiyama/frame-04.jpg",
+      "assets/scenes/jp-kyoto-arashiyama/frame-05.jpg"
+    ],
+    "frameCount": 5
+  },
+  {
+    "id": "jp-kyoto-fushimi",
+    "country": "日本",
+    "city": "京都",
+    "name": "伏見稻荷鳥居",
+    "frames": [
+      "assets/scenes/jp-kyoto-fushimi/frame-01.jpg",
+      "assets/scenes/jp-kyoto-fushimi/frame-02.jpg",
+      "assets/scenes/jp-kyoto-fushimi/frame-03.jpg",
+      "assets/scenes/jp-kyoto-fushimi/frame-04.jpg",
+      "assets/scenes/jp-kyoto-fushimi/frame-05.jpg",
+      "assets/scenes/jp-kyoto-fushimi/frame-06.jpg",
+      "assets/scenes/jp-kyoto-fushimi/frame-07.jpg",
+      "assets/scenes/jp-kyoto-fushimi/frame-08.jpg",
+      "assets/scenes/jp-kyoto-fushimi/frame-09.jpg",
+      "assets/scenes/jp-kyoto-fushimi/frame-10.jpg"
+    ],
+    "frameCount": 10
+  },
+  {
+    "id": "jp-kyoto-gion",
+    "country": "日本",
+    "city": "京都",
+    "name": "祇園花見小路",
+    "frames": [
+      "assets/scenes/jp-kyoto-gion/frame-01.jpg",
+      "assets/scenes/jp-kyoto-gion/frame-02.jpg",
+      "assets/scenes/jp-kyoto-gion/frame-03.jpg",
+      "assets/scenes/jp-kyoto-gion/frame-04.jpg",
+      "assets/scenes/jp-kyoto-gion/frame-05.jpg",
+      "assets/scenes/jp-kyoto-gion/frame-06.jpg",
+      "assets/scenes/jp-kyoto-gion/frame-07.jpg",
+      "assets/scenes/jp-kyoto-gion/frame-08.jpg",
+      "assets/scenes/jp-kyoto-gion/frame-09.jpg",
+      "assets/scenes/jp-kyoto-gion/frame-10.jpg"
+    ],
+    "frameCount": 10
+  },
+  {
+    "id": "jp-kyoto-kinkaku",
+    "country": "日本",
+    "city": "京都",
+    "name": "金閣寺倒影",
+    "frames": [
+      "assets/scenes/jp-kyoto-kinkaku/frame-01.jpg",
+      "assets/scenes/jp-kyoto-kinkaku/frame-02.jpg",
+      "assets/scenes/jp-kyoto-kinkaku/frame-03.jpg",
+      "assets/scenes/jp-kyoto-kinkaku/frame-04.jpg",
+      "assets/scenes/jp-kyoto-kinkaku/frame-05.jpg",
+      "assets/scenes/jp-kyoto-kinkaku/frame-06.jpg",
+      "assets/scenes/jp-kyoto-kinkaku/frame-07.jpg",
+      "assets/scenes/jp-kyoto-kinkaku/frame-08.jpg",
+      "assets/scenes/jp-kyoto-kinkaku/frame-09.jpg",
+      "assets/scenes/jp-kyoto-kinkaku/frame-10.jpg"
+    ],
+    "frameCount": 10
+  },
+  {
+    "id": "jp-osaka-dotonbori",
+    "country": "日本",
+    "city": "大阪",
+    "name": "道頓堀霓虹",
+    "frames": [
+      "assets/scenes/jp-osaka-dotonbori/frame-01.jpg",
+      "assets/scenes/jp-osaka-dotonbori/frame-02.jpg",
+      "assets/scenes/jp-osaka-dotonbori/frame-03.jpg",
+      "assets/scenes/jp-osaka-dotonbori/frame-04.jpg",
+      "assets/scenes/jp-osaka-dotonbori/frame-05.jpg",
+      "assets/scenes/jp-osaka-dotonbori/frame-06.jpg",
+      "assets/scenes/jp-osaka-dotonbori/frame-07.jpg",
+      "assets/scenes/jp-osaka-dotonbori/frame-08.jpg",
+      "assets/scenes/jp-osaka-dotonbori/frame-09.jpg",
+      "assets/scenes/jp-osaka-dotonbori/frame-10.jpg"
+    ],
+    "frameCount": 10
+  },
+  {
+    "id": "jp-osaka-castle",
+    "country": "日本",
+    "city": "大阪",
+    "name": "大阪城夜景",
+    "frames": [
+      "assets/scenes/jp-osaka-castle/frame-01.jpg",
+      "assets/scenes/jp-osaka-castle/frame-02.jpg",
+      "assets/scenes/jp-osaka-castle/frame-03.jpg",
+      "assets/scenes/jp-osaka-castle/frame-04.jpg",
+      "assets/scenes/jp-osaka-castle/frame-05.jpg",
+      "assets/scenes/jp-osaka-castle/frame-06.jpg",
+      "assets/scenes/jp-osaka-castle/frame-07.jpg",
+      "assets/scenes/jp-osaka-castle/frame-08.jpg",
+      "assets/scenes/jp-osaka-castle/frame-09.jpg",
+      "assets/scenes/jp-osaka-castle/frame-10.jpg"
+    ],
+    "frameCount": 10
+  },
+  {
+    "id": "jp-osaka-shinsekai",
+    "country": "日本",
+    "city": "大阪",
+    "name": "新世界夜景",
+    "frames": [
+      "assets/scenes/jp-osaka-shinsekai/frame-01.jpg",
+      "assets/scenes/jp-osaka-shinsekai/frame-02.jpg",
+      "assets/scenes/jp-osaka-shinsekai/frame-03.jpg",
+      "assets/scenes/jp-osaka-shinsekai/frame-04.jpg",
+      "assets/scenes/jp-osaka-shinsekai/frame-05.jpg",
+      "assets/scenes/jp-osaka-shinsekai/frame-06.jpg",
+      "assets/scenes/jp-osaka-shinsekai/frame-07.jpg",
+      "assets/scenes/jp-osaka-shinsekai/frame-08.jpg",
+      "assets/scenes/jp-osaka-shinsekai/frame-09.jpg"
+    ],
+    "frameCount": 9
+  },
+  {
+    "id": "jp-tokyo-shibuya",
+    "country": "日本",
+    "city": "東京",
+    "name": "澀谷夜景",
+    "frames": [
+      "assets/scenes/jp-tokyo-shibuya/frame-01.jpg",
+      "assets/scenes/jp-tokyo-shibuya/frame-02.jpg",
+      "assets/scenes/jp-tokyo-shibuya/frame-03.jpg",
+      "assets/scenes/jp-tokyo-shibuya/frame-04.jpg",
+      "assets/scenes/jp-tokyo-shibuya/frame-05.jpg",
+      "assets/scenes/jp-tokyo-shibuya/frame-06.jpg",
+      "assets/scenes/jp-tokyo-shibuya/frame-07.jpg",
+      "assets/scenes/jp-tokyo-shibuya/frame-08.jpg",
+      "assets/scenes/jp-tokyo-shibuya/frame-09.jpg",
+      "assets/scenes/jp-tokyo-shibuya/frame-10.jpg"
+    ],
+    "frameCount": 10
+  },
+  {
+    "id": "jp-tokyo-shinjuku",
+    "country": "日本",
+    "city": "東京",
+    "name": "新宿歌舞伎町",
+    "frames": [
+      "assets/scenes/jp-tokyo-shinjuku/frame-01.jpg",
+      "assets/scenes/jp-tokyo-shinjuku/frame-02.jpg",
+      "assets/scenes/jp-tokyo-shinjuku/frame-03.jpg",
+      "assets/scenes/jp-tokyo-shinjuku/frame-04.jpg",
+      "assets/scenes/jp-tokyo-shinjuku/frame-05.jpg",
+      "assets/scenes/jp-tokyo-shinjuku/frame-06.jpg",
+      "assets/scenes/jp-tokyo-shinjuku/frame-07.jpg",
+      "assets/scenes/jp-tokyo-shinjuku/frame-08.jpg",
+      "assets/scenes/jp-tokyo-shinjuku/frame-09.jpg",
+      "assets/scenes/jp-tokyo-shinjuku/frame-10.jpg"
+    ],
+    "frameCount": 10
+  },
+  {
+    "id": "jp-tokyo-asakusa",
+    "country": "日本",
+    "city": "東京",
+    "name": "淺草雷門夜景",
+    "frames": [
+      "assets/scenes/jp-tokyo-asakusa/frame-01.jpg",
+      "assets/scenes/jp-tokyo-asakusa/frame-02.jpg",
+      "assets/scenes/jp-tokyo-asakusa/frame-03.jpg",
+      "assets/scenes/jp-tokyo-asakusa/frame-04.jpg",
+      "assets/scenes/jp-tokyo-asakusa/frame-05.jpg",
+      "assets/scenes/jp-tokyo-asakusa/frame-06.jpg",
+      "assets/scenes/jp-tokyo-asakusa/frame-07.jpg",
+      "assets/scenes/jp-tokyo-asakusa/frame-08.jpg",
+      "assets/scenes/jp-tokyo-asakusa/frame-09.jpg",
+      "assets/scenes/jp-tokyo-asakusa/frame-10.jpg"
+    ],
+    "frameCount": 10
+  },
+  {
+    "id": "jp-tokyo-skytree",
+    "country": "日本",
+    "city": "東京",
+    "name": "晴空塔夜景",
+    "frames": [
+      "assets/scenes/jp-tokyo-skytree/frame-01.jpg",
+      "assets/scenes/jp-tokyo-skytree/frame-02.jpg",
+      "assets/scenes/jp-tokyo-skytree/frame-03.jpg",
+      "assets/scenes/jp-tokyo-skytree/frame-04.jpg",
+      "assets/scenes/jp-tokyo-skytree/frame-05.jpg",
+      "assets/scenes/jp-tokyo-skytree/frame-06.jpg",
+      "assets/scenes/jp-tokyo-skytree/frame-07.jpg",
+      "assets/scenes/jp-tokyo-skytree/frame-08.jpg",
+      "assets/scenes/jp-tokyo-skytree/frame-09.jpg",
+      "assets/scenes/jp-tokyo-skytree/frame-10.jpg"
+    ],
+    "frameCount": 10
+  },
+  {
+    "id": "jp-tokyo-rainbow",
+    "country": "日本",
+    "city": "東京",
+    "name": "彩虹橋夜景",
+    "frames": [
+      "assets/scenes/jp-tokyo-rainbow/frame-01.jpg",
+      "assets/scenes/jp-tokyo-rainbow/frame-02.jpg",
+      "assets/scenes/jp-tokyo-rainbow/frame-03.jpg",
+      "assets/scenes/jp-tokyo-rainbow/frame-04.jpg",
+      "assets/scenes/jp-tokyo-rainbow/frame-05.jpg",
+      "assets/scenes/jp-tokyo-rainbow/frame-06.jpg",
+      "assets/scenes/jp-tokyo-rainbow/frame-07.jpg",
+      "assets/scenes/jp-tokyo-rainbow/frame-08.jpg",
+      "assets/scenes/jp-tokyo-rainbow/frame-09.jpg",
+      "assets/scenes/jp-tokyo-rainbow/frame-10.jpg"
+    ],
+    "frameCount": 10
+  },
+  {
+    "id": "tw-taipei-jiufen",
+    "country": "台灣",
+    "city": "台北",
+    "name": "九份夜景",
+    "frames": [
+      "assets/scenes/tw-taipei-jiufen/frame-01.jpg",
+      "assets/scenes/tw-taipei-jiufen/frame-02.jpg",
+      "assets/scenes/tw-taipei-jiufen/frame-03.jpg",
+      "assets/scenes/tw-taipei-jiufen/frame-04.jpg",
+      "assets/scenes/tw-taipei-jiufen/frame-05.jpg",
+      "assets/scenes/tw-taipei-jiufen/frame-06.jpg",
+      "assets/scenes/tw-taipei-jiufen/frame-07.jpg",
+      "assets/scenes/tw-taipei-jiufen/frame-08.jpg",
+      "assets/scenes/tw-taipei-jiufen/frame-09.jpg",
+      "assets/scenes/tw-taipei-jiufen/frame-10.jpg"
+    ],
+    "frameCount": 10
+  },
+  {
+    "id": "tw-taipei-elephant",
+    "country": "台灣",
+    "city": "台北",
+    "name": "象山101夜景",
+    "frames": [
+      "assets/scenes/tw-taipei-elephant/frame-01.jpg",
+      "assets/scenes/tw-taipei-elephant/frame-02.jpg",
+      "assets/scenes/tw-taipei-elephant/frame-03.jpg",
+      "assets/scenes/tw-taipei-elephant/frame-04.jpg",
+      "assets/scenes/tw-taipei-elephant/frame-05.jpg",
+      "assets/scenes/tw-taipei-elephant/frame-06.jpg",
+      "assets/scenes/tw-taipei-elephant/frame-07.jpg",
+      "assets/scenes/tw-taipei-elephant/frame-08.jpg",
+      "assets/scenes/tw-taipei-elephant/frame-09.jpg",
+      "assets/scenes/tw-taipei-elephant/frame-10.jpg"
+    ],
+    "frameCount": 10
+  },
+  {
+    "id": "tw-taipei-danshui",
+    "country": "台灣",
+    "city": "台北",
+    "name": "淡水夕陽",
+    "frames": [
+      "assets/scenes/tw-taipei-danshui/frame-01.jpg",
+      "assets/scenes/tw-taipei-danshui/frame-02.jpg",
+      "assets/scenes/tw-taipei-danshui/frame-03.jpg",
+      "assets/scenes/tw-taipei-danshui/frame-04.jpg",
+      "assets/scenes/tw-taipei-danshui/frame-05.jpg",
+      "assets/scenes/tw-taipei-danshui/frame-06.jpg",
+      "assets/scenes/tw-taipei-danshui/frame-07.jpg",
+      "assets/scenes/tw-taipei-danshui/frame-08.jpg",
+      "assets/scenes/tw-taipei-danshui/frame-09.jpg",
+      "assets/scenes/tw-taipei-danshui/frame-10.jpg"
+    ],
+    "frameCount": 10
+  },
+  {
+    "id": "tw-taipei-ximending",
+    "country": "台灣",
+    "city": "台北",
+    "name": "西門町霓虹",
+    "frames": [
+      "assets/scenes/tw-taipei-ximending/frame-01.jpg",
+      "assets/scenes/tw-taipei-ximending/frame-02.jpg",
+      "assets/scenes/tw-taipei-ximending/frame-03.jpg",
+      "assets/scenes/tw-taipei-ximending/frame-04.jpg",
+      "assets/scenes/tw-taipei-ximending/frame-05.jpg",
+      "assets/scenes/tw-taipei-ximending/frame-06.jpg",
+      "assets/scenes/tw-taipei-ximending/frame-07.jpg",
+      "assets/scenes/tw-taipei-ximending/frame-08.jpg",
+      "assets/scenes/tw-taipei-ximending/frame-09.jpg",
+      "assets/scenes/tw-taipei-ximending/frame-10.jpg"
+    ],
+    "frameCount": 10
+  },
+  {
+    "id": "tw-kaohsiung-pier2",
+    "country": "台灣",
+    "city": "高雄",
+    "name": "駁二夕陽",
+    "frames": [
+      "assets/scenes/tw-kaohsiung-pier2/frame-01.jpg",
+      "assets/scenes/tw-kaohsiung-pier2/frame-02.jpg",
+      "assets/scenes/tw-kaohsiung-pier2/frame-03.jpg",
+      "assets/scenes/tw-kaohsiung-pier2/frame-04.jpg",
+      "assets/scenes/tw-kaohsiung-pier2/frame-05.jpg"
+    ],
+    "frameCount": 5
+  },
+  {
+    "id": "tw-kaohsiung-lotus",
+    "country": "台灣",
+    "city": "高雄",
+    "name": "蓮池潭龍虎塔",
+    "frames": [
+      "assets/scenes/tw-kaohsiung-lotus/frame-01.jpg",
+      "assets/scenes/tw-kaohsiung-lotus/frame-02.jpg",
+      "assets/scenes/tw-kaohsiung-lotus/frame-03.jpg",
+      "assets/scenes/tw-kaohsiung-lotus/frame-04.jpg",
+      "assets/scenes/tw-kaohsiung-lotus/frame-05.jpg",
+      "assets/scenes/tw-kaohsiung-lotus/frame-06.jpg",
+      "assets/scenes/tw-kaohsiung-lotus/frame-07.jpg",
+      "assets/scenes/tw-kaohsiung-lotus/frame-08.jpg",
+      "assets/scenes/tw-kaohsiung-lotus/frame-09.jpg",
+      "assets/scenes/tw-kaohsiung-lotus/frame-10.jpg"
+    ],
+    "frameCount": 10
+  },
+  {
+    "id": "tw-kaohsiung-cijin",
+    "country": "台灣",
+    "city": "高雄",
+    "name": "旗津海岸夕陽",
+    "frames": [
+      "assets/scenes/tw-kaohsiung-cijin/frame-01.jpg",
+      "assets/scenes/tw-kaohsiung-cijin/frame-02.jpg",
+      "assets/scenes/tw-kaohsiung-cijin/frame-03.jpg",
+      "assets/scenes/tw-kaohsiung-cijin/frame-04.jpg",
+      "assets/scenes/tw-kaohsiung-cijin/frame-05.jpg",
+      "assets/scenes/tw-kaohsiung-cijin/frame-06.jpg",
+      "assets/scenes/tw-kaohsiung-cijin/frame-07.jpg",
+      "assets/scenes/tw-kaohsiung-cijin/frame-08.jpg",
+      "assets/scenes/tw-kaohsiung-cijin/frame-09.jpg",
+      "assets/scenes/tw-kaohsiung-cijin/frame-10.jpg"
+    ],
+    "frameCount": 10
+  },
+  {
+    "id": "tw-kaohsiung-formosa",
+    "country": "台灣",
+    "city": "高雄",
+    "name": "美麗島捷運站",
+    "frames": [
+      "assets/scenes/tw-kaohsiung-formosa/frame-01.jpg",
+      "assets/scenes/tw-kaohsiung-formosa/frame-02.jpg",
+      "assets/scenes/tw-kaohsiung-formosa/frame-03.jpg",
+      "assets/scenes/tw-kaohsiung-formosa/frame-04.jpg",
+      "assets/scenes/tw-kaohsiung-formosa/frame-05.jpg",
+      "assets/scenes/tw-kaohsiung-formosa/frame-06.jpg",
+      "assets/scenes/tw-kaohsiung-formosa/frame-07.jpg",
+      "assets/scenes/tw-kaohsiung-formosa/frame-08.jpg",
+      "assets/scenes/tw-kaohsiung-formosa/frame-09.jpg",
+      "assets/scenes/tw-kaohsiung-formosa/frame-10.jpg"
+    ],
+    "frameCount": 10
+  },
+  {
+    "id": "hk-victoria",
+    "country": "香港",
+    "city": "香港",
+    "name": "維多利亞港夜景",
+    "frames": [
+      "assets/scenes/hk-victoria/frame-01.jpg",
+      "assets/scenes/hk-victoria/frame-02.jpg",
+      "assets/scenes/hk-victoria/frame-03.jpg",
+      "assets/scenes/hk-victoria/frame-04.jpg",
+      "assets/scenes/hk-victoria/frame-05.jpg",
+      "assets/scenes/hk-victoria/frame-06.jpg",
+      "assets/scenes/hk-victoria/frame-07.jpg",
+      "assets/scenes/hk-victoria/frame-08.jpg",
+      "assets/scenes/hk-victoria/frame-09.jpg",
+      "assets/scenes/hk-victoria/frame-10.jpg"
+    ],
+    "frameCount": 10
+  },
+  {
+    "id": "hk-peak",
+    "country": "香港",
+    "city": "香港",
+    "name": "太平山頂夜景",
+    "frames": [
+      "assets/scenes/hk-peak/frame-01.jpg",
+      "assets/scenes/hk-peak/frame-02.jpg",
+      "assets/scenes/hk-peak/frame-03.jpg",
+      "assets/scenes/hk-peak/frame-04.jpg",
+      "assets/scenes/hk-peak/frame-05.jpg",
+      "assets/scenes/hk-peak/frame-06.jpg",
+      "assets/scenes/hk-peak/frame-07.jpg",
+      "assets/scenes/hk-peak/frame-08.jpg",
+      "assets/scenes/hk-peak/frame-09.jpg",
+      "assets/scenes/hk-peak/frame-10.jpg"
+    ],
+    "frameCount": 10
+  },
+  {
+    "id": "hk-mongkok",
+    "country": "香港",
+    "city": "香港",
+    "name": "旺角霓虹街道",
+    "frames": [
+      "assets/scenes/hk-mongkok/frame-01.jpg",
+      "assets/scenes/hk-mongkok/frame-02.jpg",
+      "assets/scenes/hk-mongkok/frame-03.jpg",
+      "assets/scenes/hk-mongkok/frame-04.jpg",
+      "assets/scenes/hk-mongkok/frame-05.jpg",
+      "assets/scenes/hk-mongkok/frame-06.jpg",
+      "assets/scenes/hk-mongkok/frame-07.jpg",
+      "assets/scenes/hk-mongkok/frame-08.jpg",
+      "assets/scenes/hk-mongkok/frame-09.jpg",
+      "assets/scenes/hk-mongkok/frame-10.jpg"
+    ],
+    "frameCount": 10
+  },
+  {
+    "id": "hk-tsimsha",
+    "country": "香港",
+    "city": "香港",
+    "name": "尖沙咀海濱夜景",
+    "frames": [
+      "assets/scenes/hk-tsimsha/frame-01.jpg",
+      "assets/scenes/hk-tsimsha/frame-02.jpg",
+      "assets/scenes/hk-tsimsha/frame-03.jpg",
+      "assets/scenes/hk-tsimsha/frame-04.jpg",
+      "assets/scenes/hk-tsimsha/frame-05.jpg",
+      "assets/scenes/hk-tsimsha/frame-06.jpg",
+      "assets/scenes/hk-tsimsha/frame-07.jpg",
+      "assets/scenes/hk-tsimsha/frame-08.jpg",
+      "assets/scenes/hk-tsimsha/frame-09.jpg",
+      "assets/scenes/hk-tsimsha/frame-10.jpg"
+    ],
+    "frameCount": 10
+  }
+]

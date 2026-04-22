@@ -1,0 +1,12 @@
+{
+  "name": "flipbook-studio",
+  "version": "1.0.0",
+  "description": "脆翻書 Studio — 場景資產管理",
+  "type": "module",
+  "scripts": {
+    "download": "node download-scenes.js"
+  },
+  "dependencies": {
+    "node-fetch": "^3.3.2"
+  }
+}

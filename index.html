@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>脆翻書 · FlipBook Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ── HEADER ── -->
+  <header class="site-header">
+    <div class="logo">脆<span class="accent">翻</span>書 <span class="logo-sub">Studio</span></div>
+    <span class="badge-threads">For Threads</span>
+  </header>
+
+  <!-- ── HERO ── -->
+  <section class="hero">
+    <p class="hero-eyebrow">零成本 · 隱私保護 · 純前端運算</p>
+    <h1 class="hero-title">把動作照片<br>變成 <em>手翻書</em></h1>
+    <p class="hero-desc">上傳 10–30 張連拍，3 步生成具有物理質感的 MP4 循環影片，直接發 Threads。</p>
+
+    <div class="steps-bar">
+      <div class="step-item active" data-step="1">
+        <div class="step-num">1</div><span>上傳照片</span>
+      </div>
+      <div class="step-item" data-step="2">
+        <div class="step-num">2</div><span>選擇場景</span>
+      </div>
+      <div class="step-item" data-step="3">
+        <div class="step-num">3</div><span>生成下載</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── MAIN LAYOUT ── -->
+  <div class="main-layout">
+
+    <!-- ── LEFT: CONTROLS ── -->
+    <aside class="sidebar">
+
+      <!-- STEP 1: UPLOAD -->
+      <div class="panel" id="panel-upload">
+        <p class="panel-title">01 — 上傳連拍照</p>
+        <div class="upload-zone" id="upload-zone">
+          <input type="file" id="file-input" accept="image/*" multiple>
+          <div class="upload-icon">📸</div>
+          <p><strong>點擊或拖曳</strong>上傳照片<br>建議 10–30 張，JPG / PNG</p>
+          <span class="upload-count" id="upload-count">尚未選擇檔案</span>
+        </div>
+        <div class="photo-strip" id="photo-strip"></div>
+      </div>
+
+      <!-- STEP 2: SCENE PICKER -->
+      <div class="panel" id="panel-scene">
+        <p class="panel-title">02 — 選擇背景場景</p>
+
+        <!-- Country tabs -->
+        <div class="country-tabs" id="country-tabs"></div>
+
+        <!-- City tabs -->
+        <div class="city-tabs" id="city-tabs"></div>
+
+        <!-- Scene cards grid -->
+        <div class="scene-grid" id="scene-grid"></div>
+      </div>
+
+    </aside>
+
+    <!-- ── RIGHT: PREVIEW + EXPORT ── -->
+    <div class="preview-area">
+
+      <!-- Canvas preview -->
+      <div class="canvas-wrapper" id="canvas-wrapper">
+        <div class="preview-placeholder" id="preview-placeholder">
+          <div class="big-icon">🎞</div>
+          <p>上傳照片後<br>預覽將在此出現</p>
+        </div>
+        <canvas id="preview-canvas"></canvas>
+      </div>
+
+      <!-- Stats row -->
+      <div class="stat-row" id="stat-row" style="display:none">
+        <div class="stat-chip"><div class="dot"></div><span id="stat-frames">—</span></div>
+        <div class="stat-chip"><div class="dot"></div><span id="stat-dur">—</span></div>
+        <div class="stat-chip"><div class="dot"></div><span>1080 × 1350</span></div>
+        <div class="stat-chip"><div class="dot"></div><span>4:5 比例</span></div>
+      </div>
+
+      <!-- Progress -->
+      <div class="progress-wrap" id="progress-wrap">
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+        <span class="progress-label" id="progress-label">準備中…</span>
+      </div>
+
+      <!-- Generate button -->
+      <button class="btn-primary" id="generate-btn" disabled>
+        <span>⚡</span> 生成手翻書影片
+      </button>
+
+      <!-- Result panel -->
+      <div class="result-panel" id="result-panel">
+        <div class="result-title">影片已生成 🎉</div>
+        <div class="result-meta" id="result-meta"></div>
+        <div class="result-actions">
+          <button class="btn-primary" id="download-btn">⬇ 下載 MP4</button>
+          <button class="btn-secondary" id="reset-btn">重新製作</button>
+        </div>
+      </div>
+
+      <p class="tip">所有處理在您的瀏覽器本機完成，照片不會上傳至任何伺服器 🔒</p>
+    </div>
+  </div>
+
+  <!-- Hidden canvases for rendering -->
+  <canvas id="work-canvas" style="display:none"></canvas>
+
+  <!-- Scripts (module) -->
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
