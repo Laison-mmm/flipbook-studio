@@ -1,6 +1,6 @@
 /**
- * scenes.js
- * 載入 manifest.json，提供場景資料與分組
+ * scenes.js  v2
+ * 加入白天/黃昏/夜晚分類
  */
 
 let _manifest = null;
@@ -12,40 +12,35 @@ export async function loadManifest() {
   return _manifest;
 }
 
-/**
- * 回傳所有國家（去重）
- */
+// 根據場景名稱自動判斷時段
+function getTimeOfDay(scene) {
+  const name = scene.name + ' ' + (scene.id || '');
+  if (/夜|night|neon|霓虹|夜景/i.test(name))          return 'night';
+  if (/日落|夕陽|sunset|黃昏|golden|傍晚/i.test(name)) return 'dusk';
+  return 'day';
+}
+
 export function getCountries(manifest) {
   return [...new Set(manifest.map(s => s.country))];
 }
 
-/**
- * 回傳某國家下的所有城市
- */
 export function getCities(manifest, country) {
-  return [...new Set(
-    manifest.filter(s => s.country === country).map(s => s.city)
-  )];
+  return [...new Set(manifest.filter(s => s.country === country).map(s => s.city))];
 }
 
-/**
- * 回傳某城市下的所有場景
- */
-export function getScenes(manifest, country, city) {
-  return manifest.filter(s => s.country === country && s.city === city);
+export function getScenes(manifest, country, city, timeFilter = 'all') {
+  return manifest.filter(s => {
+    if (s.country !== country || s.city !== city) return false;
+    if (timeFilter === 'all') return true;
+    return getTimeOfDay(s) === timeFilter;
+  });
 }
 
-/**
- * 預載入某場景的所有幀圖片
- * 回傳 HTMLImageElement[]，已載入完畢
- */
 export function preloadSceneFrames(scene) {
-  return Promise.all(
-    scene.frames.map(src => new Promise((resolve, reject) => {
-      const img = new Image();
-      img.onload  = () => resolve(img);
-      img.onerror = () => reject(new Error(`Failed to load ${src}`));
-      img.src = src;
-    }))
-  );
+  return Promise.all(scene.frames.map(src => new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload  = () => resolve(img);
+    img.onerror = () => reject(new Error(`Failed: ${src}`));
+    img.src = src;
+  })));
 }
