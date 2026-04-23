@@ -105,13 +105,11 @@ fileInput.addEventListener('change', () => handleFiles(fileInput.files));
 async function handleFiles(fileList) {
   const files = Array.from(fileList).filter(f => f.type.startsWith('image/')).slice(0, 30);
   if (!files.length) return;
-
   state.rawImages = [];
   state.segmentedItems = [];
   state.segmentDone = false;
   generateBtn.disabled = true;
   stopPreviewAnim();
-
   uploadCount.textContent = `載入中 ${files.length} 張…`;
   const loaded = await Promise.all(files.map((file, idx) => new Promise(resolve => {
     const blobUrl = URL.createObjectURL(file);
@@ -121,10 +119,8 @@ async function handleFiles(fileList) {
   })));
   state.rawImages = loaded;
   buildPhotoStrip();
-
   progressWrap.classList.add('visible');
   setProgress(0, '載入去背模型…');
-
   try {
     state.segmentedItems = await segmentImages(loaded.map(i => i.img), (cur, total, pct) => {
       setProgress(pct, `去背中 ${cur} / ${total} 張…`);
@@ -132,7 +128,6 @@ async function handleFiles(fileList) {
   } catch (e) {
     state.segmentedItems = loaded.map(i => i.img);
   }
-
   state.segmentDone = true;
   progressWrap.classList.remove('visible');
   uploadCount.textContent = `已選擇 ${state.rawImages.length} 張照片`;
@@ -164,16 +159,13 @@ function renderPreviewFrame(idx) {
   state.previewFrame = idx % state.segmentedItems.length;
   previewCanvas.width  = OUTPUT_W;
   previewCanvas.height = OUTPUT_H;
-
   const entry = {
     item:       state.segmentedItems[state.previewFrame],
     photoIdx:   state.previewFrame,
     subFrame:   0,
     posIdx:     state.previewFrame % 2,
-    holdFrames: 24,
   };
   compositeFrame(previewCtx, entry, state.bgFrames);
-
   previewCanvas.style.display = 'block';
   previewHolder.style.display = 'none';
 }
@@ -211,9 +203,8 @@ generateBtn.addEventListener('click', async () => {
   resultPanel.classList.remove('visible');
   stopPreviewAnim();
   progressWrap.classList.add('visible');
-  setProgress(0, '初始化…');
+  setProgress(0, '優化序列中…');
   updateSteps(3);
-
   try {
     const sequence = buildSequence(state.segmentedItems);
     state.videoBlob = await encode({ sequence, bgFrames: state.bgFrames, workCanvas, onProgress: setProgress });
@@ -225,7 +216,6 @@ generateBtn.addEventListener('click', async () => {
   } catch (err) {
     setProgress(0, `⚠️ 錯誤：${err.message}`);
   }
-
   state.generating = false;
   generateBtn.disabled = false;
   startPreviewAnim();
