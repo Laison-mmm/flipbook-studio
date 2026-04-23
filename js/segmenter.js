@@ -1,6 +1,6 @@
 /**
- * segmenter.js  v5
- * 侵蝕加強 4px + 對比門檻收緊 120/180
+ * segmenter.js — stable rollback
+ * 侵蝕 4px + 對比門檻 120/180 + 高斯模糊
  */
 
 const MEDIAPIPE_CDN = 'https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation@0.1/selfie_segmentation.js';
@@ -47,16 +47,13 @@ function _segmentOne(seg, imgEl) {
       mCtx.drawImage(result.segmentationMask, 0, 0, w, h);
       const raw = mCtx.getImageData(0,0,w,h).data;
 
-      // 高對比拉伸（收緊門檻）
       const mask = new Float32Array(w*h);
       for (let i=0; i<w*h; i++) {
         const v = raw[i*4];
         mask[i] = v < 120 ? 0 : v > 180 ? 255 : ((v-120)/60)*255;
       }
 
-      // 侵蝕 4px
       const eroded  = _erode(mask, w, h, 4);
-      // 高斯模糊
       const blurred = _gaussianBlur(eroded, w, h, 2);
 
       const out = document.createElement('canvas');

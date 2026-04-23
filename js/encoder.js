@@ -1,7 +1,6 @@
 /**
- * encoder.js  v3
- * 統一使用 MediaRecorder（穩定、跨瀏覽器、手機相容）
- * WebCodecs 方案在 yield 時容易 codec closed，已移除
+ * encoder.js — stable rollback
+ * MediaRecorder 穩定版
  */
 
 import { compositeFrame, OUTPUT_W, OUTPUT_H, FPS } from './renderer.js';
@@ -10,7 +9,6 @@ export async function encode({ sequence, bgFrames, workCanvas, onProgress }) {
   workCanvas.width  = OUTPUT_W;
   workCanvas.height = OUTPUT_H;
 
-  // 選最佳 mimeType
   const mimeType = [
     'video/mp4;codecs=avc1',
     'video/webm;codecs=vp9',
@@ -21,15 +19,9 @@ export async function encode({ sequence, bgFrames, workCanvas, onProgress }) {
   onProgress(2, '初始化錄製器…');
 
   const stream   = workCanvas.captureStream(FPS);
-  const recorder = new MediaRecorder(stream, {
-    mimeType,
-    videoBitsPerSecond: 4_000_000,
-  });
-
-  const chunks = [];
+  const recorder = new MediaRecorder(stream, { mimeType, videoBitsPerSecond: 4_000_000 });
+  const chunks   = [];
   recorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
-
-  // 開始錄製，每幀請求一次 data
   recorder.start();
 
   const ctx     = workCanvas.getContext('2d');
@@ -38,14 +30,13 @@ export async function encode({ sequence, bgFrames, workCanvas, onProgress }) {
 
   for (let i = 0; i < total; i++) {
     onProgress(Math.round(5 + (i / total) * 90), `合成第 ${i + 1} / ${total} 幀…`);
-    compositeFrame(ctx, sequence[i], bgFrames, i, total);
+    compositeFrame(ctx, sequence[i], bgFrames);
     await _sleep(frameMs);
   }
 
   onProgress(96, '封裝影片…');
   recorder.stop();
   await new Promise(r => (recorder.onstop = r));
-
   onProgress(100, '完成！');
 
   const ext = mimeType.includes('mp4') ? 'video/mp4' : 'video/webm';
