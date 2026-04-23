@@ -41,6 +41,7 @@ const iosClose = document.getElementById('ios-close');
 const newsNameInput = document.getElementById('news-name-input');
 const newsNameRand = document.getElementById('news-name-rand');
 const newsNamePresets = document.getElementById('news-name-presets');
+const limitSelector = document.getElementById('limit-selector');
 
 const state = {
   manifest: null,
@@ -85,8 +86,7 @@ function bindEvents() {
 
   newsNameRand.addEventListener('click', () => {
     const name = NEWS_NAMES[Math.floor(Math.random() * NEWS_NAMES.length)];
-    newsNameInput.value = name;
-    state.newspaperName = name;
+    newsNameInput.value = name; state.newspaperName = name;
     if (state.segmentDone) renderPreviewFrame(0);
   });
 
@@ -94,12 +94,7 @@ function bindEvents() {
     limitBtns.forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     state.maxPhotos = parseInt(btn.dataset.limit, 10);
-    if (state.rawImages.length > state.maxPhotos) {
-      state.rawImages = state.rawImages.slice(0, state.maxPhotos);
-      state.segmentedItems = state.segmentedItems.slice(0, state.maxPhotos);
-      buildPhotoStrip(); updateStats();
-      if (state.segmentDone) renderPreviewFrame(0);
-    }
+    _enforceConstraints();
   }));
 
   uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('drag-over'); });
@@ -114,9 +109,8 @@ function bindEvents() {
 
 function buildNewsPresets() {
   newsNamePresets.innerHTML = '';
-  NEWS_NAMES.slice(0, 6).forEach(name => {
-    const b = document.createElement('button');
-    b.className = 'tab-btn-small'; b.textContent = name;
+  NEWS_NAMES.slice(0, 5).forEach(name => {
+    const b = document.createElement('button'); b.className = 'tab-btn'; b.textContent = name;
     b.onclick = () => { newsNameInput.value = name; state.newspaperName = name; if (state.segmentDone) renderPreviewFrame(0); };
     newsNamePresets.appendChild(b);
   });
@@ -124,13 +118,32 @@ function buildNewsPresets() {
 
 function updateModeUI() {
   const isFlip = state.outputMode === 'flipbook';
+  const isBig = state.outputMode === 'news-big';
+  const isGrid = state.outputMode === 'news-grid';
+
   panelScene.style.display = isFlip ? 'block' : 'none';
   panelNewspaper.style.display = isFlip ? 'none' : 'block';
+  limitSelector.style.display = isFlip ? 'flex' : 'none';
+  
   heroEm.textContent = isFlip ? '手翻書' : '報紙版面';
-  heroDesc.textContent = isFlip ? '上傳連拍，3 步生成具有物理質感的循環影片。' : '將照片轉為復古報紙風格的靜態圖片。';
+  heroDesc.textContent = isFlip ? '上傳連拍，生成具有質感的循環影片。' : (isBig ? '生成震撼的大標題頭版報導。' : '生成一大兩小的專業分欄版面。');
   previewIcon.textContent = isFlip ? '🎞' : '📰';
   generateText.textContent = isFlip ? '生成手翻書影片' : '生成報紙圖片';
+
+  _enforceConstraints();
   if (isFlip) { if (state.segmentDone) startPreviewAnim(); } else { stopPreviewAnim(); }
+}
+
+function _enforceConstraints() {
+  if (!state.segmentDone) return;
+  if (state.outputMode === 'news-big') {
+    state.maxPhotos = 1;
+  } else if (state.outputMode === 'news-grid') {
+    state.maxPhotos = 3;
+  }
+  buildPhotoStrip();
+  updateStats();
+  renderPreviewFrame(0);
 }
 
 function buildCountryTabs(manifest) {
@@ -177,7 +190,11 @@ async function selectScene(scene, card) {
 }
 
 async function handleFiles(fileList) {
-  let files = Array.from(fileList).filter(f => f.type.startsWith('image/')).slice(0, state.maxPhotos);
+  let files = Array.from(fileList).filter(f => f.type.startsWith('image/'));
+  if (state.outputMode === 'news-big') files = files.slice(0, 1);
+  else if (state.outputMode === 'news-grid') files = files.slice(0, 3);
+  else files = files.slice(0, state.maxPhotos);
+
   if (!files.length) return;
   state.rawImages = []; state.segmentedItems = []; state.segmentDone = false;
   generateBtn.disabled = true; stopPreviewAnim();
@@ -186,9 +203,9 @@ async function handleFiles(fileList) {
     img.onload = () => resolve({ img, blobUrl, id: idx }); img.src = blobUrl;
   })));
   state.rawImages = loaded; buildPhotoStrip();
-  progressWrap.classList.add('visible'); setProgress(0, '載入去背模型…');
+  progressWrap.classList.add('visible'); setProgress(0, '初始化精密去背…');
   try {
-    state.segmentedItems = await segmentImages(loaded.map(i => i.img), (cur, total, pct) => setProgress(pct, `去背中 ${cur} / ${total}…`));
+    state.segmentedItems = await segmentImages(loaded.map(i => i.img), (cur, total, pct) => setProgress(pct, `處理中 ${cur} / ${total}…`));
   } catch { state.segmentedItems = loaded.map(i => i.img); }
   state.segmentDone = true; progressWrap.classList.remove('visible');
   updateStats(); renderPreviewFrame(0);
@@ -198,7 +215,8 @@ async function handleFiles(fileList) {
 
 function buildPhotoStrip() {
   photoStrip.innerHTML = '';
-  state.rawImages.forEach((item, i) => {
+  const displayCount = state.outputMode === 'news-big' ? 1 : (state.outputMode === 'news-grid' ? 3 : state.rawImages.length);
+  state.rawImages.slice(0, displayCount).forEach((item, i) => {
     const div = document.createElement('div'); div.className = 'thumb'; div.draggable = true;
     div.innerHTML = `<img src="${item.blobUrl}"><span class="thumb-num">${i + 1}</span><span class="thumb-delete">✕</span>`;
     div.querySelector('.thumb-delete').onclick = (e) => { e.stopPropagation(); deletePhoto(i); };
@@ -253,13 +271,13 @@ function updateStats() {
   if (state.outputMode === 'flipbook') {
     const y = n === 1 ? 1 : 2 * n - 2; const d = (y * Math.max(6, Math.round(14.5 / y * INTERNAL_FPS)) / INTERNAL_FPS).toFixed(1);
     statFrames.textContent = `${y} 張`; statDur.textContent = `約 ${d} 秒`;
-  } else { statFrames.textContent = `靜態圖`; statDur.textContent = `1 張`; }
+  } else { statFrames.textContent = `靜態圖`; statDur.textContent = state.outputMode === 'news-big' ? '1 張' : '3 張'; }
   statRow.style.display = 'flex';
 }
 
 async function handleGenerate() {
   state.generating = true; generateBtn.disabled = true; resultPanel.classList.remove('visible');
-  progressWrap.classList.add('visible'); setProgress(0, '初始化…'); updateSteps(3);
+  progressWrap.classList.add('visible'); setProgress(0, '處理中…'); updateSteps(3);
   try {
     if (state.outputMode === 'flipbook') {
       const seq = buildSequence(state.segmentedItems);
@@ -268,9 +286,9 @@ async function handleGenerate() {
       state.videoBlob = await encode({ sequence: seq, bgFrames: state.bgFrames, workCanvas, onProgress: setProgress });
       resultMeta.textContent = `${state.segmentedItems.length} 張 · 約 ${(seq.length * h / INTERNAL_FPS).toFixed(1)} 秒`;
     } else {
-      setProgress(50, '正在網點化渲染…');
+      setProgress(50, '網點渲染優化中…');
       state.imageBlob = await generateNewspaperBlob(state);
-      resultMeta.textContent = `報紙模式 · JPEG · ${(state.imageBlob.size / 1024 / 1024).toFixed(1)} MB`;
+      resultMeta.textContent = `JPEG · ${(state.imageBlob.size / 1024 / 1024).toFixed(1)} MB`;
       setProgress(100, '完成');
     }
     progressWrap.classList.remove('visible'); resultPanel.classList.add('visible');
@@ -282,14 +300,14 @@ async function handleDownload() {
   const isFlip = state.outputMode === 'flipbook';
   const blob = isFlip ? state.videoBlob : state.imageBlob; if (!blob) return;
   const name = `${isFlip ? 'flip' : 'news'}_${Date.now()}.${isFlip ? 'mp4' : 'jpg'}`;
+  const url = URL.createObjectURL(blob);
   const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
   if (isIOS) {
-    const url = URL.createObjectURL(blob);
     if (isFlip) { iosVideo.src = url; iosVideo.style.display = 'block'; iosImg.style.display = 'none'; }
     else { iosImg.src = url; iosImg.style.display = 'block'; iosVideo.style.display = 'none'; }
     iosModal.classList.add('visible');
   } else {
-    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; a.click();
+    const a = document.createElement('a'); a.href = url; a.download = name; a.click();
   }
 }
 
@@ -297,7 +315,7 @@ function handleReset() {
   stopPreviewAnim(); state.rawImages.forEach(i => URL.revokeObjectURL(i.blobUrl));
   state.rawImages = []; state.segmentedItems = []; state.videoBlob = null; state.imageBlob = null;
   photoStrip.innerHTML = ''; previewCanvas.style.display = 'none'; previewHolder.style.display = '';
-  statRow.style.display = 'none'; resultPanel.classList.remove('visible'); updateSteps(1);
+  statRow.style.display = 'none'; resultPanel.classList.remove('visible'); updateSteps(1); fileInput.value = '';
 }
 
 function setProgress(p, l) { progressFill.style.width = `${p}%`; progressLabel.textContent = l; }
