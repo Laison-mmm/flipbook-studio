@@ -4,15 +4,25 @@ export async function loadManifest() {
 }
 
 export function getCountries(manifest) {
-  return Object.keys(manifest.scenes);
+  const countries = new Set();
+  manifest.forEach(scene => {
+    if (scene.country) countries.add(scene.country);
+  });
+  return Array.from(countries);
 }
 
 export function getCities(manifest, country) {
-  return Object.keys(manifest.scenes[country] || {});
+  const cities = new Set();
+  manifest.forEach(scene => {
+    if (scene.country === country && scene.city) {
+      cities.add(scene.city);
+    }
+  });
+  return Array.from(cities);
 }
 
 export function getScenes(manifest, country, city) {
-  return manifest.scenes[country]?.[city] || [];
+  return manifest.filter(scene => scene.country === country && scene.city === city);
 }
 
 export async function preloadSceneFrames(scene) {
