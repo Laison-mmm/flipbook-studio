@@ -11,6 +11,8 @@ const CITY_TITLE_MAP = {
 
 const PAPER_BG = '#f0e8d0';
 const INK_COLOR = '#1a1a1a';
+const CANVAS_W = 1080;
+const CANVAS_H = 1350;
 
 export const NEWS_NAMES = [
   'THE DAILY FLIP', 'BUSAN DAILY', 'SEOUL MORNING', 'KYOTO TIMES', 'OSAKA POST',
@@ -18,63 +20,72 @@ export const NEWS_NAMES = [
 ];
 
 export function drawNewspaper(ctx, { items, mode, city, name, width, height, isPreview = false }) {
-  const S = width / 1080;
+  const scale = width / CANVAS_W;
+  ctx.save();
+  ctx.scale(scale, scale);
+  
   ctx.fillStyle = PAPER_BG;
-  ctx.fillRect(0, 0, width, height);
+  ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
 
-  _drawNoise(ctx, width, height);
+  _drawNoise(ctx, CANVAS_W, CANVAS_H);
 
   ctx.fillStyle = INK_COLOR;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'top';
   
-  ctx.font = `bold ${110 * S}px "Bebas Neue", sans-serif`;
-  ctx.fillText(name || 'THE DAILY FLIP', width / 2, 80 * S);
+  ctx.font = 'bold 155px "Bebas Neue", sans-serif';
+  ctx.fillText(name || 'THE DAILY FLIP', CANVAS_W / 2, 70);
   
-  const titleText = CITY_TITLE_MAP[city] || 'WORLD NEWS / 全球快報';
-  ctx.font = `${30 * S}px "Noto Sans TC", serif`;
-  ctx.fillText(titleText, width / 2, 205 * S);
+  const subTitle = CITY_TITLE_MAP[city] || 'WORLD NEWS / 全球快報';
+  ctx.font = '34px "Noto Sans TC", serif';
+  ctx.fillText(subTitle, CANVAS_W / 2, 225);
 
-  ctx.lineWidth = 2.5 * S;
+  ctx.strokeStyle = INK_COLOR;
+  ctx.lineWidth = 6;
   ctx.beginPath();
-  ctx.moveTo(70 * S, 260 * S); ctx.lineTo(width - 70 * S, 260 * S);
-  ctx.moveTo(70 * S, 272 * S); ctx.lineTo(width - 70 * S, 272 * S);
+  ctx.moveTo(60, 280); ctx.lineTo(1020, 280);
+  ctx.stroke();
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(60, 292); ctx.lineTo(1020, 292);
   ctx.stroke();
 
-  const date = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }).toUpperCase();
-  ctx.font = `${22 * S}px "Noto Sans TC", sans-serif`;
-  ctx.textAlign = 'left'; ctx.fillText('VOL. 09.19', 75 * S, 288 * S);
-  ctx.textAlign = 'right'; ctx.fillText(date, width - 75 * S, 288 * S);
+  const dateStr = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }).toUpperCase();
+  ctx.font = '700 24px "Noto Sans TC", sans-serif';
+  ctx.textAlign = 'left'; ctx.fillText('VOL. 0919-MOD', 65, 308);
+  ctx.textAlign = 'right'; ctx.fillText(dateStr, 1015, 308);
 
+  ctx.lineWidth = 2;
   ctx.beginPath();
-  ctx.moveTo(70 * S, 325 * S); ctx.lineTo(width - 70 * S, 325 * S);
+  ctx.moveTo(60, 345); ctx.lineTo(1020, 345);
   ctx.stroke();
 
-  const contentY = 360 * S;
-  const boxW = width - 140 * S;
+  const contentY = 385;
+  const contentW = 960;
 
   if (mode === 'news-big') {
-    const boxH = height * 0.54;
-    _drawPhoto(ctx, items[0], 70 * S, contentY, boxW, boxH, S, isPreview);
-    _drawColumns(ctx, 70 * S, contentY + boxH + 40 * S, boxW, height - (contentY + boxH + 80 * S), 2, S);
+    const mainH = 750;
+    _drawPhoto(ctx, items[0], 60, contentY, contentW, mainH, isPreview);
+    _drawColumns(ctx, 60, contentY + mainH + 45, contentW, CANVAS_H - (contentY + mainH + 90), 2);
   } else {
-    const mainH = height * 0.44;
+    const mainH = 620;
     const subset = [items[0], items[Math.floor(items.length / 2)], items[items.length - 1]];
-    _drawPhoto(ctx, subset[0], 70 * S, contentY, boxW, mainH, S, isPreview);
+    _drawPhoto(ctx, subset[0], 60, contentY, contentW, mainH, isPreview);
     
-    const subW = (boxW - 30 * S) / 2;
-    const subH = height - (contentY + mainH + 80 * S);
-    _drawPhoto(ctx, subset[1], 70 * S, contentY + mainH + 30 * S, subW, subH, S, isPreview);
-    _drawPhoto(ctx, subset[2], 70 * S + subW + 30 * S, contentY + mainH + 30 * S, subW, subH, S, isPreview);
+    const subW = 465;
+    const subH = CANVAS_H - (contentY + mainH + 110);
+    _drawPhoto(ctx, subset[1], 60, contentY + mainH + 35, subW, subH, isPreview);
+    _drawPhoto(ctx, subset[2], 60 + subW + 30, contentY + mainH + 35, subW, subH, isPreview);
   }
 
   ctx.globalCompositeOperation = 'multiply';
   ctx.fillStyle = 'rgba(240, 232, 208, 0.4)';
-  ctx.fillRect(0, 0, width, height);
-  ctx.globalCompositeOperation = 'source-over';
+  ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
+  
+  ctx.restore();
 }
 
-function _drawPhoto(ctx, img, x, y, w, h, S, isPreview) {
+function _drawPhoto(ctx, img, x, y, w, h, isPreview) {
   if (!img) return;
   const natW = img.naturalWidth || img.width;
   const natH = img.naturalHeight || img.height;
@@ -86,16 +97,16 @@ function _drawPhoto(ctx, img, x, y, w, h, S, isPreview) {
 
   if (isPreview) {
     ctx.save();
-    ctx.filter = 'grayscale(100%) contrast(1.1) brightness(0.98)';
+    ctx.filter = 'grayscale(100%) contrast(1.15) brightness(0.95)';
     ctx.drawImage(img, sx, sy, sw, sh, x, y, w, h);
     ctx.restore();
-    ctx.strokeStyle = INK_COLOR; ctx.lineWidth = 1 * S; ctx.strokeRect(x, y, w, h);
+    ctx.strokeStyle = INK_COLOR; ctx.lineWidth = 2; ctx.strokeRect(x, y, w, h);
     return;
   }
 
   const tmp = document.createElement('canvas'); tmp.width = w; tmp.height = h;
   const tCtx = tmp.getContext('2d');
-  tCtx.filter = 'grayscale(100%) contrast(1.25) brightness(1.02)';
+  tCtx.filter = 'grayscale(100%) contrast(1.4) brightness(1.05)';
   tCtx.drawImage(img, sx, sy, sw, sh, 0, 0, w, h);
   const data = tCtx.getImageData(0, 0, w, h).data;
   const step = 4;
@@ -104,25 +115,27 @@ function _drawPhoto(ctx, img, x, y, w, h, S, isPreview) {
     for (let cx = 0; cx < w; cx += step) {
       const p = (Math.floor(cy) * Math.floor(w) + Math.floor(cx)) * 4;
       const b = (data[p] + data[p+1] + data[p+2]) / 3;
-      const r = ((255 - b) / 255) * (step / 1.55);
-      if (r > 0.45) { ctx.beginPath(); ctx.arc(x + cx, y + cy, r, 0, Math.PI * 2); ctx.fill(); }
+      const r = ((255 - b) / 255) * (step / 1.5);
+      if (r > 0.4) { ctx.beginPath(); ctx.arc(x + cx, y + cy, r, 0, Math.PI * 2); ctx.fill(); }
     }
   }
-  ctx.strokeStyle = INK_COLOR; ctx.lineWidth = 2.5 * S; ctx.strokeRect(x, y, w, h);
+  ctx.strokeStyle = INK_COLOR; ctx.lineWidth = 4; ctx.strokeRect(x, y, w, h);
 }
 
-function _drawColumns(ctx, x, y, w, h, cols, S) {
-  const gap = 40 * S; const colW = (w - gap * (cols - 1)) / cols;
-  ctx.fillStyle = INK_COLOR; ctx.font = `${16 * S}px serif`;
-  const text = "LOREM IPSUM DOLOR SIT AMET CONSECTETUR ADIPISCING ELIT SED DO EIUSMOD TEMPOR INCIDIDUNT UT LABORE ET DOLORE MAGNA ALIQUA UT ENIM AD MINIM VENIAM QUIS NOSTRUD EXERCITATION ULLAMCO LABORIS NISI UT ALIQUIP EX EA COMMODO CONSEQUAT DUIS AUTE IRURE DOLOR IN REPREHENDERIT IN VOLUPTATE VELIT ESSE CILLUM DOLORE EU FUGIAT NULLA PARIATUR.";
+function _drawColumns(ctx, x, y, w, h, cols) {
+  const gap = 50; const colW = (w - gap * (cols - 1)) / cols;
+  ctx.fillStyle = INK_COLOR;
+  ctx.font = '18px serif';
+  ctx.textAlign = 'justify';
+  const text = "LOREM IPSUM DOLOR SIT AMET CONSECTETUR ADIPISCING ELIT SED DO EIUSMOD TEMPOR INCIDIDUNT UT LABORE ET DOLORE MAGNA ALIQUA UT ENIM AD MINIM VENIAM QUIS NOSTRUD EXERCITATION ULLAMCO LABORIS NISI UT ALIQUIP EX EA COMMODO CONSEQUAT DUIS AUTE IRURE DOLOR IN REPREHENDERIT IN VOLUPTATE VELIT ESSE CILLUM DOLORE EU FUGIAT NULLA PARIATUR EXCEPTEUR SINT OCCAECAT CUPIDATAT NON PROIDENT SUNT IN CULPA QUI OFFICIA DESERUNT MOLLIT ANIM ID EST LABORUM.";
   const words = text.split(' ');
   for (let i = 0; i < cols; i++) {
     let curY = y; let line = '';
     for (let n = 0; n < words.length; n++) {
       let test = line + words[n] + ' ';
       if (ctx.measureText(test).width > colW && n > 0) {
-        ctx.fillText(line, x + i * (colW + gap), curY); line = words[n] + ' '; curY += 22 * S;
-        if (curY > y + h - 22 * S) break;
+        ctx.fillText(line, x + i * (colW + gap), curY); line = words[n] + ' '; curY += 26;
+        if (curY > y + h - 26) break;
       } else { line = test; }
     }
     if (curY < y + h) ctx.fillText(line, x + i * (colW + gap), curY);
@@ -137,10 +150,11 @@ function _drawNoise(ctx, w, h) {
 }
 
 export async function generateNewspaperBlob(state) {
-  const canvas = document.createElement('canvas'); canvas.width = 1080; canvas.height = 1350;
+  const canvas = document.createElement('canvas');
+  canvas.width = CANVAS_W; canvas.height = CANVAS_H;
   drawNewspaper(canvas.getContext('2d'), {
     items: state.segmentedItems, mode: state.outputMode, city: state.activeCity,
-    name: state.newspaperName, width: 1080, height: 1350, isPreview: false
+    name: state.newspaperName, width: CANVAS_W, height: CANVAS_H, isPreview: false
   });
-  return new Promise(r => canvas.toBlob(r, 'image/jpeg', 0.9));
+  return new Promise(r => canvas.toBlob(r, 'image/jpeg', 0.92));
 }
