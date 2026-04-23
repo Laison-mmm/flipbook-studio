@@ -1,33 +1,29 @@
-/**
- * scenes.js — stable rollback
- */
-
-let _manifest = null;
-
 export async function loadManifest() {
-  if (_manifest) return _manifest;
   const res = await fetch('assets/scenes/manifest.json');
-  _manifest = await res.json();
-  return _manifest;
+  return res.json();
 }
 
 export function getCountries(manifest) {
-  return [...new Set(manifest.map(s => s.country))];
+  return Object.keys(manifest.scenes);
 }
 
 export function getCities(manifest, country) {
-  return [...new Set(manifest.filter(s => s.country === country).map(s => s.city))];
+  return Object.keys(manifest.scenes[country] || {});
 }
 
 export function getScenes(manifest, country, city) {
-  return manifest.filter(s => s.country === country && s.city === city);
+  return manifest.scenes[country]?.[city] || [];
 }
 
-export function preloadSceneFrames(scene) {
-  return Promise.all(scene.frames.map(src => new Promise((resolve, reject) => {
+export async function preloadSceneFrames(scene) {
+  const promises = scene.frames.map(url => new Promise(resolve => {
     const img = new Image();
-    img.onload  = () => resolve(img);
-    img.onerror = () => reject(new Error(`Failed: ${src}`));
-    img.src = src;
-  })));
+    img.onload = () => resolve(img);
+    img.onerror = () => resolve(null);
+    img.src = url;
+  }));
+  const results = await Promise.all(promises);
+  const validFrames = results.filter(img => img !== null);
+  if (validFrames.length === 0) throw new Error('Scene images not found');
+  return validFrames;
 }
