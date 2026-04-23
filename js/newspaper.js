@@ -1,6 +1,6 @@
 const CITY_TITLE_MAP = {
   '釜山': 'BUSAN DAILY / 부산 일보',
-  '首爾': 'SEOUL MORNING / 서울 신門',
+  '首爾': 'SEOUL MORNING / 서울 신문',
   '京都': 'KYOTO TIMES / 京都新聞',
   '大阪': 'OSAKA POST / 大阪日日',
   '東京': 'TOKYO EXPRESS / 東京新聞',
