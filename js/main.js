@@ -1,13 +1,8 @@
-/**
- * main.js — stable rollback
- */
-
 import { loadManifest, getCountries, getCities, getScenes, preloadSceneFrames } from './scenes.js';
 import { segmentImages } from './segmenter.js';
-import { buildSequence, compositeFrame, OUTPUT_W, OUTPUT_H, FPS, INTERNAL_FPS, HOLD_FRAMES } from './renderer.js';
+import { buildSequence, compositeFrame, OUTPUT_W, OUTPUT_H, FPS, INTERNAL_FPS } from './renderer.js';
 import { encode } from './encoder.js';
 
-/* ── DOM ── */
 const uploadZone    = document.getElementById('upload-zone');
 const fileInput     = document.getElementById('file-input');
 const photoStrip    = document.getElementById('photo-strip');
@@ -31,7 +26,6 @@ const statFrames    = document.getElementById('stat-frames');
 const statDur       = document.getElementById('stat-dur');
 const previewCtx    = previewCanvas.getContext('2d');
 
-/* ── STATE ── */
 const state = {
   manifest:       null,
   rawImages:      [],
@@ -47,7 +41,6 @@ const state = {
   previewAnimId:  null,
 };
 
-/* ── BOOT ── */
 async function init() {
   state.manifest = await loadManifest();
   buildCountryTabs(state.manifest);
@@ -55,7 +48,6 @@ async function init() {
   selectCountry(first);
 }
 
-/* ── SCENE PICKER ── */
 function buildCountryTabs(manifest) {
   countryTabs.innerHTML = '';
   getCountries(manifest).forEach(c => countryTabs.appendChild(_tabBtn(c, () => selectCountry(c))));
@@ -105,7 +97,6 @@ async function selectScene(scene, card) {
   if (state.segmentDone) { renderPreviewFrame(state.previewFrame); updateSteps(2); }
 }
 
-/* ── UPLOAD + 去背 ── */
 uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('drag-over'); });
 uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('drag-over'));
 uploadZone.addEventListener('drop', e => { e.preventDefault(); uploadZone.classList.remove('drag-over'); handleFiles(e.dataTransfer.files); });
@@ -139,7 +130,6 @@ async function handleFiles(fileList) {
       setProgress(pct, `去背中 ${cur} / ${total} 張…`);
     });
   } catch (e) {
-    console.warn('去背失敗，使用原圖:', e);
     state.segmentedItems = loaded.map(i => i.img);
   }
 
@@ -153,7 +143,6 @@ async function handleFiles(fileList) {
   updateSteps(2);
 }
 
-/* ── PHOTO STRIP ── */
 function buildPhotoStrip() {
   photoStrip.innerHTML = '';
   state.rawImages.slice(0, 12).forEach((item, i) => {
@@ -170,7 +159,6 @@ function buildPhotoStrip() {
   }
 }
 
-/* ── PREVIEW ── */
 function renderPreviewFrame(idx) {
   if (!state.segmentedItems.length) return;
   state.previewFrame = idx % state.segmentedItems.length;
@@ -181,8 +169,8 @@ function renderPreviewFrame(idx) {
     item:       state.segmentedItems[state.previewFrame],
     photoIdx:   state.previewFrame,
     subFrame:   0,
-    posIdx:     1,
-    holdFrames: HOLD_FRAMES,
+    posIdx:     state.previewFrame % 2,
+    holdFrames: 24,
   };
   compositeFrame(previewCtx, entry, state.bgFrames);
 
@@ -210,17 +198,12 @@ function stopPreviewAnim() {
   state.previewAnimId = null;
 }
 
-/* ── STATS ── */
 function updateStats() {
-  const n      = state.segmentedItems.length;
-  const yoyo   = 2 * n - 2;
-  const dur    = (yoyo * HOLD_FRAMES / INTERNAL_FPS).toFixed(1);
-  statFrames.textContent = `${yoyo} 張`;
-  statDur.textContent    = `約 ${dur} 秒`;
+  statFrames.textContent = `360 幀`;
+  statDur.textContent    = `15.0 秒`;
   statRow.style.display  = 'flex';
 }
 
-/* ── GENERATE ── */
 generateBtn.addEventListener('click', async () => {
   if (state.generating || !state.segmentedItems.length) return;
   state.generating = true;
@@ -235,13 +218,11 @@ generateBtn.addEventListener('click', async () => {
     const sequence = buildSequence(state.segmentedItems);
     state.videoBlob = await encode({ sequence, bgFrames: state.bgFrames, workCanvas, onProgress: setProgress });
     const ext    = state.videoBlob.type.includes('mp4') ? 'MP4' : 'WebM';
-    const dur    = (sequence.length / INTERNAL_FPS).toFixed(1);
     const sizeMB = (state.videoBlob.size / 1024 / 1024).toFixed(1);
     progressWrap.classList.remove('visible');
     resultPanel.classList.add('visible');
-    resultMeta.textContent = `${state.segmentedItems.length} 張 · ${dur} 秒 · ${sizeMB} MB · ${ext}`;
+    resultMeta.textContent = `${state.segmentedItems.length} 張 · 15.0 秒 · ${sizeMB} MB · ${ext}`;
   } catch (err) {
-    console.error(err);
     setProgress(0, `⚠️ 錯誤：${err.message}`);
   }
 
@@ -250,7 +231,6 @@ generateBtn.addEventListener('click', async () => {
   startPreviewAnim();
 });
 
-/* ── DOWNLOAD ── */
 downloadBtn.addEventListener('click', async () => {
   if (!state.videoBlob) return;
   const ext      = state.videoBlob.type.includes('mp4') ? 'mp4' : 'webm';
@@ -267,7 +247,6 @@ downloadBtn.addEventListener('click', async () => {
   setTimeout(() => URL.revokeObjectURL(url), 10000);
 });
 
-/* ── RESET ── */
 resetBtn.addEventListener('click', () => {
   stopPreviewAnim();
   state.rawImages.forEach(i => URL.revokeObjectURL(i.blobUrl));
@@ -280,7 +259,6 @@ resetBtn.addEventListener('click', () => {
   fileInput.value = ''; updateSteps(1);
 });
 
-/* ── HELPERS ── */
 function setProgress(pct, label) { progressFill.style.width = `${pct}%`; progressLabel.textContent = label; }
 function updateSteps(active) {
   document.querySelectorAll('.step-item').forEach(el => {
