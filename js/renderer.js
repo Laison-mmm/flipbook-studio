@@ -54,16 +54,13 @@ export function compositeFrame(ctx, entry, bgFrames) {
   if (bgFrames && bgFrames.length > 0) {
     _drawCover(ctx, bgFrames[photoIdx % bgFrames.length], 0, 0, W, H);
   } else {
-    const g = ctx.createLinearGradient(0, 0, W, H);
-    g.addColorStop(0, '#1a1a2e');
-    g.addColorStop(1, '#0f3460');
-    ctx.fillStyle = g;
+    ctx.fillStyle = '#161616';
     ctx.fillRect(0, 0, W, H);
   }
 
   const natW = item.naturalWidth || item.width;
   const natH = item.naturalHeight || item.height;
-  const personW = W * 0.78;
+  const personW = W * 0.82;
   const personH = personW * (natH / natW);
   const posOff = POS_OFFSETS[posIdx ?? 1] * W;
   const drawX = (W - personW) / 2 + posOff;
@@ -72,45 +69,39 @@ export function compositeFrame(ctx, entry, bgFrames) {
   ctx.save();
   ctx.translate(dx, dy);
 
-  const shadowY = drawY + personH - 12;
+  const shadowY = drawY + personH - 15;
   const shadowX = drawX + personW / 2;
-  const radGrad = ctx.createRadialGradient(shadowX, shadowY, personW * 0.1, shadowX, shadowY, personW * 0.4);
-  radGrad.addColorStop(0, 'rgba(0,0,0,0.65)');
+  const radGrad = ctx.createRadialGradient(shadowX, shadowY, 0, shadowX, shadowY, personW * 0.45);
+  radGrad.addColorStop(0, 'rgba(0,0,0,0.55)');
   radGrad.addColorStop(1, 'rgba(0,0,0,0)');
   ctx.fillStyle = radGrad;
   ctx.beginPath();
-  ctx.ellipse(shadowX, shadowY, personW * 0.35, personH * 0.08, 0, 0, Math.PI * 2);
+  ctx.ellipse(shadowX, shadowY, personW * 0.4, personH * 0.06, 0, 0, Math.PI * 2);
   ctx.fill();
 
   ctx.translate(drawX + personW / 2, drawY + personH / 2);
   ctx.rotate(rot);
   
-  ctx.shadowColor = 'rgba(0,0,0,0.35)';
-  ctx.shadowBlur = 10;
-  ctx.shadowOffsetX = 0;
-  ctx.shadowOffsetY = 5;
+  ctx.save();
+  ctx.shadowColor = 'rgba(0,0,0,0.2)';
+  ctx.shadowBlur = 15;
   
-  ctx.filter = 'contrast(1.05) saturate(1.1) brightness(0.95)';
+  const toneFilter = bgFrames.length ? 'contrast(1.08) brightness(0.96) saturate(1.05) sepia(0.05)' : 'none';
+  ctx.filter = toneFilter;
+  
   ctx.drawImage(item, -personW / 2, -personH / 2, personW, personH);
   ctx.restore();
+  
+  ctx.globalCompositeOperation = 'destination-in';
+  ctx.filter = 'blur(1.2px)';
+  ctx.drawImage(item, -personW / 2, -personH / 2, personW, personH);
+  ctx.globalCompositeOperation = 'source-over';
+  
+  ctx.restore();
 
-  if (bgFrames && bgFrames.length > 0) {
-    ctx.save();
-    ctx.globalCompositeOperation = 'overlay';
-    ctx.fillStyle = 'rgba(255, 160, 60, 0.06)';
-    ctx.fillRect(0, 0, W, H);
-    ctx.restore();
-  }
-
-  const fg = ctx.createLinearGradient(0, H * 0.78, 0, H);
-  fg.addColorStop(0, 'rgba(0,0,0,0)');
-  fg.addColorStop(1, 'rgba(0,0,0,0.5)');
-  ctx.fillStyle = fg;
-  ctx.fillRect(0, 0, W, H);
-
-  const vg = ctx.createRadialGradient(W / 2, H / 2, H * 0.15, W / 2, H / 2, H * 0.75);
+  const vg = ctx.createRadialGradient(W / 2, H / 2, H * 0.2, W / 2, H / 2, H * 0.85);
   vg.addColorStop(0, 'rgba(0,0,0,0)');
-  vg.addColorStop(1, 'rgba(0,0,0,0.45)');
+  vg.addColorStop(1, 'rgba(0,0,0,0.35)');
   ctx.fillStyle = vg;
   ctx.fillRect(0, 0, W, H);
 }
@@ -122,15 +113,9 @@ function _drawCover(ctx, img, x, y, w, h) {
   const cR = w / h;
   let sw, sh, sx, sy;
   if (iR > cR) {
-    sh = natH;
-    sw = sh * cR;
-    sy = 0;
-    sx = (natW - sw) / 2;
+    sh = natH; sw = sh * cR; sy = 0; sx = (natW - sw) / 2;
   } else {
-    sw = natW;
-    sh = sw / cR;
-    sx = 0;
-    sy = (natH - sh) / 2;
+    sw = natW; sh = sw / cR; sx = 0; sy = (natH - sh) / 2;
   }
   ctx.drawImage(img, sx, sy, sw, sh, x, y, w, h);
 }
