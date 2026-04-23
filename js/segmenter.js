@@ -1,8 +1,3 @@
-/**
- * segmenter.js — stable rollback
- * 侵蝕 4px + 對比門檻 120/180 + 高斯模糊
- */
-
 const MEDIAPIPE_CDN = 'https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation@0.1/selfie_segmentation.js';
 const SOLUTION_CDN  = 'https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation@0.1';
 let _segmenter = null;
@@ -50,10 +45,10 @@ function _segmentOne(seg, imgEl) {
       const mask = new Float32Array(w*h);
       for (let i=0; i<w*h; i++) {
         const v = raw[i*4];
-        mask[i] = v < 120 ? 0 : v > 180 ? 255 : ((v-120)/60)*255;
+        mask[i] = v < 155 ? 0 : v > 215 ? 255 : ((v-155)/60)*255;
       }
 
-      const eroded  = _erode(mask, w, h, 4);
+      const eroded  = _erode(mask, w, h, 7);
       const blurred = _gaussianBlur(eroded, w, h, 2);
 
       const out = document.createElement('canvas');
