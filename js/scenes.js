@@ -1,33 +1,33 @@
+/**
+ * scenes.js — stable rollback
+ */
+
+let _manifest = null;
+
 export async function loadManifest() {
+  if (_manifest) return _manifest;
   const res = await fetch('assets/scenes/manifest.json');
-  return res.json();
+  _manifest = await res.json();
+  return _manifest;
 }
 
 export function getCountries(manifest) {
-  const countries = new Set();
-  manifest.forEach(s => { if (s.country) countries.add(s.country); });
-  return Array.from(countries);
+  return [...new Set(manifest.map(s => s.country))];
 }
 
 export function getCities(manifest, country) {
-  const cities = new Set();
-  manifest.forEach(s => { if (s.country === country && s.city) cities.add(s.city); });
-  return Array.from(cities);
+  return [...new Set(manifest.filter(s => s.country === country).map(s => s.city))];
 }
 
 export function getScenes(manifest, country, city) {
   return manifest.filter(s => s.country === country && s.city === city);
 }
 
-export async function preloadSceneFrames(scene) {
-  if (!scene || !scene.frames) return [];
-  const promises = scene.frames.map(url => new Promise(resolve => {
+export function preloadSceneFrames(scene) {
+  return Promise.all(scene.frames.map(src => new Promise((resolve, reject) => {
     const img = new Image();
-    img.onload = () => resolve(img);
-    img.onerror = () => resolve(null);
-    img.src = url;
-  }));
-  const results = await Promise.all(promises);
-  const valid = results.filter(i => i !== null);
-  return valid;
+    img.onload  = () => resolve(img);
+    img.onerror = () => reject(new Error(`Failed: ${src}`));
+    img.src = src;
+  })));
 }
