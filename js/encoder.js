@@ -1,12 +1,7 @@
-/**
- * encoder.js — stable rollback
- * MediaRecorder 穩定版
- */
-
-import { compositeFrame, OUTPUT_W, OUTPUT_H, FPS } from './renderer.js';
+import { compositeFrame, OUTPUT_W, OUTPUT_H, INTERNAL_FPS } from './renderer.js';
 
 export async function encode({ sequence, bgFrames, workCanvas, onProgress }) {
-  workCanvas.width  = OUTPUT_W;
+  workCanvas.width = OUTPUT_W;
   workCanvas.height = OUTPUT_H;
 
   const mimeType = [
@@ -18,15 +13,15 @@ export async function encode({ sequence, bgFrames, workCanvas, onProgress }) {
 
   onProgress(2, '初始化錄製器…');
 
-  const stream   = workCanvas.captureStream(FPS);
-  const recorder = new MediaRecorder(stream, { mimeType, videoBitsPerSecond: 4_000_000 });
-  const chunks   = [];
+  const stream = workCanvas.captureStream(INTERNAL_FPS);
+  const recorder = new MediaRecorder(stream, { mimeType, videoBitsPerSecond: 4000000 });
+  const chunks = [];
   recorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
   recorder.start();
 
-  const ctx     = workCanvas.getContext('2d');
-  const frameMs = 1000 / FPS;
-  const total   = sequence.length;
+  const ctx = workCanvas.getContext('2d');
+  const frameMs = 1000 / INTERNAL_FPS;
+  const total = sequence.length;
 
   for (let i = 0; i < total; i++) {
     onProgress(Math.round(5 + (i / total) * 90), `合成第 ${i + 1} / ${total} 幀…`);
