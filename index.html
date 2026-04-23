@@ -58,8 +58,18 @@
 
       <div class="panel" id="panel-newspaper" style="display:none">
         <p class="panel-title">02 — 報紙設定</p>
-        <div class="news-settings" id="news-settings">
-          <p class="tip">報紙模式設定將於下一階段套用</p>
+        <div class="news-settings">
+          <div class="input-group">
+            <label>報紙名稱</label>
+            <div class="flex-row">
+              <input type="text" id="news-name-input" placeholder="例如: THE DAILY FLIP">
+              <button class="btn-icon" id="news-name-rand">🎲</button>
+            </div>
+          </div>
+          <div class="input-group">
+            <label>快速選擇</label>
+            <div class="tab-btns-small" id="news-name-presets"></div>
+          </div>
         </div>
       </div>
     </aside>
