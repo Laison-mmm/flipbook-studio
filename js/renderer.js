@@ -10,7 +10,7 @@ export const OUTPUT_H     = 675;
 export const HOLD_FRAMES  = 24;
 
 const TARGET_TOTAL_FRAMES = 360;
-const POS_OFFSETS = [-0.22, 0.22];
+const POS_OFFSETS = [-0.20, 0.20];
 
 function buildPositionSeq(length) {
   const seq = []; let last = -1;
@@ -24,37 +24,26 @@ function buildPositionSeq(length) {
 
 export function buildSequence(items) {
   if (!items || items.length === 0) return [];
-  
   const yoyo = items.length === 1 
     ? [items[0]] 
     : [...items, ...[...items].slice(1, -1).reverse()];
-  
   const L = yoyo.length;
   const baseHold = Math.floor(TARGET_TOTAL_FRAMES / L);
   const extra = TARGET_TOTAL_FRAMES % L;
   const posSeq = buildPositionSeq(L);
   const expanded = [];
-
   yoyo.forEach((item, photoIdx) => {
     const currentHold = photoIdx < extra ? baseHold + 1 : baseHold;
     for (let f = 0; f < currentHold; f++) {
-      expanded.push({ 
-        item, 
-        photoIdx, 
-        subFrame: f, 
-        posIdx: posSeq[photoIdx], 
-        holdFrames: currentHold 
-      });
+      expanded.push({ item, photoIdx, subFrame: f, posIdx: posSeq[photoIdx], holdFrames: currentHold });
     }
   });
-  
   return expanded;
 }
 
 export function compositeFrame(ctx, entry, bgFrames) {
-  const { item, photoIdx, subFrame, posIdx, holdFrames } = entry;
+  const { item, photoIdx, subFrame, posIdx } = entry;
   const W = OUTPUT_W, H = OUTPUT_H;
-
   const isSwitching = subFrame < 3;
   const jPX  = isSwitching ? JITTER_PX_SWITCH  : JITTER_PX_STABLE;
   const jROT = isSwitching ? JITTER_ROT_SWITCH : JITTER_ROT_STABLE;
@@ -65,8 +54,10 @@ export function compositeFrame(ctx, entry, bgFrames) {
 
   ctx.clearRect(0, 0, W, H);
 
+  let bgAvgColor = 'rgba(100,100,100,0.06)';
   if (bgFrames && bgFrames.length > 0) {
-    _drawCover(ctx, bgFrames[photoIdx % bgFrames.length], 0, 0, W, H);
+    const bg = bgFrames[photoIdx % bgFrames.length];
+    _drawCover(ctx, bg, 0, 0, W, H);
   } else {
     const g = ctx.createLinearGradient(0, 0, W, H);
     g.addColorStop(0, '#1a1a2e'); g.addColorStop(1, '#0f3460');
@@ -75,27 +66,28 @@ export function compositeFrame(ctx, entry, bgFrames) {
 
   ctx.save();
   ctx.translate(dx, dy);
-  
   const natW = item.naturalWidth || item.width;
   const natH = item.naturalHeight || item.height;
-  const personW = W * 0.65;
+  const personW = W * 0.70;
   const personH = personW * (natH / natW);
   const posOff  = POS_OFFSETS[posIdx ?? 0] * W;
 
-  ctx.shadowBlur = 20;
-  ctx.shadowColor = 'rgba(0,0,0,0.3)';
-  
+  ctx.shadowBlur = 25;
+  ctx.shadowColor = 'rgba(0,0,0,0.35)';
   ctx.drawImage(item, (W - personW) / 2 + posOff, H - personH, personW, personH);
   
-  ctx.shadowBlur = 0;
+  ctx.globalCompositeOperation = 'source-atop';
+  ctx.fillStyle = bgAvgColor;
+  ctx.fillRect((W - personW) / 2 + posOff, H - personH, personW, personH);
+  
   ctx.restore();
 
-  const fg = ctx.createLinearGradient(0, H * 0.78, 0, H);
-  fg.addColorStop(0, 'rgba(0,0,0,0)'); fg.addColorStop(1, 'rgba(0,0,0,0.6)');
+  const fg = ctx.createLinearGradient(0, H * 0.75, 0, H);
+  fg.addColorStop(0, 'rgba(0,0,0,0)'); fg.addColorStop(1, 'rgba(0,0,0,0.7)');
   ctx.fillStyle = fg; ctx.fillRect(0, 0, W, H);
 
-  const vg = ctx.createRadialGradient(W/2, H/2, H*0.15, W/2, H/2, H*0.75);
-  vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(0,0,0,0.5)');
+  const vg = ctx.createRadialGradient(W/2, H/2, H*0.15, W/2, H/2, H*0.8);
+  vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(0,0,0,0.55)');
   ctx.fillStyle = vg; ctx.fillRect(0, 0, W, H);
 }
 
