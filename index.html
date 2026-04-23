@@ -10,155 +10,84 @@
 </head>
 <body>
 
-<header class="site-header">
-  <div class="logo">脆<span class="accent">翻</span>書 <span class="logo-sub">Studio</span></div>
-  <span class="badge-threads">For Threads</span>
-</header>
+  <header class="site-header">
+    <div class="logo">脆<span class="accent">翻</span>書 <span class="logo-sub">Studio</span></div>
+    <span class="badge-threads">For Threads</span>
+  </header>
 
-<section class="hero">
-  <p class="hero-eyebrow">零成本 · 隱私保護 · 純前端運算</p>
-  <h1 class="hero-title">把動作照片<br>變成 <em>手翻書</em></h1>
-  <p class="hero-desc">上傳照片，3 步生成影片或報紙圖，直接發 Threads。</p>
-  <div class="steps-bar">
-    <div class="step-item active" data-step="1"><div class="step-num">1</div><span>上傳照片</span></div>
-    <div class="step-item" data-step="2"><div class="step-num">2</div><span>選擇場景</span></div>
-    <div class="step-item" data-step="3"><div class="step-num">3</div><span>生成下載</span></div>
+  <section class="hero">
+    <p class="hero-eyebrow">零成本 · 隱私保護 · 純前端運算</p>
+    <h1 class="hero-title">把動作照片<br>變成 <em>手翻書</em></h1>
+    <p class="hero-desc">上傳 10–30 張連拍，3 步生成具有物理質感的 MP4 循環影片，直接發 Threads。</p>
+    <div class="steps-bar">
+      <div class="step-item active" data-step="1"><div class="step-num">1</div><span>上傳照片</span></div>
+      <div class="step-item" data-step="2"><div class="step-num">2</div><span>選擇場景</span></div>
+      <div class="step-item" data-step="3"><div class="step-num">3</div><span>生成下載</span></div>
+    </div>
+  </section>
+
+  <div class="main-layout">
+    <aside class="sidebar">
+
+      <div class="panel" id="panel-upload">
+        <p class="panel-title">01 — 上傳連拍照</p>
+        <div class="upload-zone" id="upload-zone">
+          <input type="file" id="file-input" accept="image/*" multiple>
+          <div class="upload-icon">📸</div>
+          <p><strong>點擊或拖曳</strong>上傳照片<br>建議 10–30 張，JPG / PNG</p>
+          <span class="upload-count" id="upload-count">尚未選擇檔案</span>
+        </div>
+        <div class="photo-strip" id="photo-strip"></div>
+      </div>
+
+      <div class="panel" id="panel-scene">
+        <p class="panel-title">02 — 選擇背景場景</p>
+        <div class="country-tabs" id="country-tabs"></div>
+        <div class="city-tabs" id="city-tabs"></div>
+        <div class="scene-grid" id="scene-grid"></div>
+      </div>
+
+    </aside>
+
+    <div class="preview-area">
+      <div class="canvas-wrapper" id="canvas-wrapper">
+        <div class="preview-placeholder" id="preview-placeholder">
+          <div class="big-icon">🎞</div>
+          <p>上傳照片後<br>預覽將在此出現</p>
+        </div>
+        <canvas id="preview-canvas"></canvas>
+      </div>
+
+      <div class="stat-row" id="stat-row" style="display:none">
+        <div class="stat-chip"><div class="dot"></div><span id="stat-frames">—</span></div>
+        <div class="stat-chip"><div class="dot"></div><span id="stat-dur">—</span></div>
+        <div class="stat-chip"><div class="dot"></div><span>540 × 675</span></div>
+        <div class="stat-chip"><div class="dot"></div><span>4:5 比例</span></div>
+      </div>
+
+      <div class="progress-wrap" id="progress-wrap">
+        <div class="progress-bar-bg"><div class="progress-bar-fill" id="progress-fill"></div></div>
+        <span class="progress-label" id="progress-label">準備中…</span>
+      </div>
+
+      <button class="btn-primary" id="generate-btn" disabled>
+        <span>⚡</span> 生成手翻書影片
+      </button>
+
+      <div class="result-panel" id="result-panel">
+        <div class="result-title">影片已生成 🎉</div>
+        <div class="result-meta" id="result-meta"></div>
+        <div class="result-actions">
+          <button class="btn-primary" id="download-btn">⬇ 下載 MP4</button>
+          <button class="btn-secondary" id="reset-btn">重新製作</button>
+        </div>
+      </div>
+
+      <p class="tip">所有處理在您的瀏覽器本機完成，照片不會上傳至任何伺服器 🔒</p>
+    </div>
   </div>
-</section>
 
-<div class="main-layout">
-  <aside class="sidebar">
-
-    <!-- 模式切換 -->
-    <div class="panel">
-      <p class="panel-title">選擇模式</p>
-      <div class="mode-tabs">
-        <button class="mode-tab active" data-mode="flipbook">🎞 手翻書</button>
-        <button class="mode-tab" data-mode="newspaper1">📰 報紙大版</button>
-        <button class="mode-tab" data-mode="newspaper2">📰 報紙三格</button>
-      </div>
-    </div>
-
-    <!-- 上傳 -->
-    <div class="panel" id="panel-upload">
-      <p class="panel-title">01 — 上傳照片
-        <span class="count-limit" id="count-limit">上限 20 張</span>
-      </p>
-      <div class="upload-zone" id="upload-zone">
-        <input type="file" id="file-input" accept="image/*" multiple>
-        <div class="upload-icon">📸</div>
-        <p><strong>點擊或拖曳</strong>上傳照片</p>
-        <span class="upload-count" id="upload-count">尚未選擇檔案</span>
-      </div>
-
-      <!-- 張數選擇 -->
-      <div class="count-selector" id="count-selector">
-        <span class="count-label">張數上限：</span>
-        <div class="count-btns">
-          <button class="count-btn" data-count="5">5</button>
-          <button class="count-btn" data-count="10">10</button>
-          <button class="count-btn" data-count="15">15</button>
-          <button class="count-btn active" data-count="20">20</button>
-        </div>
-      </div>
-
-      <!-- 照片縮圖（可拖拉排序）-->
-      <div class="photo-strip" id="photo-strip"></div>
-    </div>
-
-    <!-- 場景選擇（手翻書模式） -->
-    <div class="panel" id="panel-scene">
-      <p class="panel-title">02 — 選擇背景場景</p>
-      <div class="time-tabs" id="time-tabs">
-        <button class="tab-btn active" data-time="all">全部</button>
-        <button class="tab-btn" data-time="day">白天</button>
-        <button class="tab-btn" data-time="dusk">黃昏</button>
-        <button class="tab-btn" data-time="night">夜晚</button>
-      </div>
-      <div class="country-tabs" id="country-tabs"></div>
-      <div class="city-tabs" id="city-tabs"></div>
-      <div class="scene-grid" id="scene-grid"></div>
-    </div>
-
-    <!-- 報紙設定（報紙模式） -->
-    <div class="panel" id="panel-newspaper" style="display:none">
-      <p class="panel-title">02 — 報紙設定</p>
-
-      <div class="np-row">
-        <span class="np-label">報紙名稱</span>
-        <div class="np-name-controls">
-          <input type="text" id="np-name-input" placeholder="自訂報名…" maxlength="24">
-          <button class="btn-sm" id="np-random-btn">隨機</button>
-        </div>
-      </div>
-
-      <div class="np-row">
-        <span class="np-label">城市（影響標題語言）</span>
-        <select id="np-city-select">
-          <option value="">— 選擇城市 —</option>
-          <option>釜山</option><option>首爾</option>
-          <option>京都</option><option>大阪</option><option>東京</option>
-          <option>台北</option><option>高雄</option><option>香港</option>
-        </select>
-      </div>
-
-      <!-- 模式二：手動指定照片 -->
-      <div id="np2-manual" style="display:none">
-        <p class="np-label" style="margin-top:10px">指定照片位置</p>
-        <div class="np2-slots">
-          <div class="np2-slot" data-slot="0"><span>大照</span><span class="slot-num" id="slot0">自動</span></div>
-          <div class="np2-slot" data-slot="1"><span>小照1</span><span class="slot-num" id="slot1">自動</span></div>
-          <div class="np2-slot" data-slot="2"><span>小照2</span><span class="slot-num" id="slot2">自動</span></div>
-        </div>
-        <div class="np2-btns">
-          <button class="btn-sm" id="np2-auto-btn">自動分配</button>
-          <button class="btn-sm" id="np2-manual-btn">手動指定</button>
-        </div>
-      </div>
-    </div>
-
-  </aside>
-
-  <!-- 預覽 + 輸出 -->
-  <div class="preview-area">
-    <div class="canvas-wrapper" id="canvas-wrapper">
-      <div class="preview-placeholder" id="preview-placeholder">
-        <div class="big-icon">🎞</div>
-        <p>上傳照片後<br>預覽將在此出現</p>
-      </div>
-      <canvas id="preview-canvas"></canvas>
-    </div>
-
-    <div class="stat-row" id="stat-row" style="display:none">
-      <div class="stat-chip"><div class="dot"></div><span id="stat-frames">—</span></div>
-      <div class="stat-chip"><div class="dot"></div><span id="stat-dur">—</span></div>
-      <div class="stat-chip"><div class="dot"></div><span>540 × 675</span></div>
-      <div class="stat-chip"><div class="dot"></div><span>4:5 比例</span></div>
-    </div>
-
-    <div class="progress-wrap" id="progress-wrap">
-      <div class="progress-bar-bg"><div class="progress-bar-fill" id="progress-fill"></div></div>
-      <span class="progress-label" id="progress-label">準備中…</span>
-    </div>
-
-    <button class="btn-primary" id="generate-btn" disabled>
-      <span>⚡</span> <span id="generate-label">生成手翻書影片</span>
-    </button>
-
-    <div class="result-panel" id="result-panel">
-      <div class="result-title" id="result-title">影片已生成 🎉</div>
-      <div class="result-meta" id="result-meta"></div>
-      <div class="result-actions">
-        <button class="btn-primary" id="download-btn">⬇ 下載</button>
-        <button class="btn-secondary" id="reset-btn">重新製作</button>
-      </div>
-    </div>
-
-    <p class="tip">所有處理在您的瀏覽器本機完成，照片不會上傳至任何伺服器 🔒</p>
-  </div>
-</div>
-
-<canvas id="work-canvas" style="display:none"></canvas>
-<script type="module" src="js/main.js"></script>
+  <canvas id="work-canvas" style="display:none"></canvas>
+  <script type="module" src="js/main.js"></script>
 </body>
 </html>
